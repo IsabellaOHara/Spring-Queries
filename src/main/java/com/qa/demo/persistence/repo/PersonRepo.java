@@ -11,7 +11,7 @@ import com.qa.demo.persistence.domain.Person;
 @Repository
 public interface PersonRepo extends JpaRepository<Person, Long> {
 
-	@Query("SELECT p from Person p")
+	@Query(value = "SELECT p from Person p")
 	List<Person> findAllJPQL();
 
 //	List<Person> findPersonByNameAndAge(String name, int age);
@@ -21,23 +21,23 @@ public interface PersonRepo extends JpaRepository<Person, Long> {
 
 	List<Person> findPersonByAgeGreaterThan(int age);
 
-	@Query("SELECT p from Person p")
+	@Query(value = "SELECT p from Person p where p.age > :age")
 	List<Person> findPersonByAgeGreaterThanJPQL(int age);
 
-	@Query("SELECT p from Person p")
+	@Query(value = "SELECT * from Person WHERE age > :age", nativeQuery = true)
 	List<Person> findPersonByAgeGreaterThanSQL(int age);
 
 	List<Person> findPersonByAgeLessThan(int age);
 
-	@Query("SELECT p from Person p")
+	@Query(value = "SELECT p from Person p where p.age < :age")
 	List<Person> findPersonByAgeLessThanJPQL(int age);
 
-	@Query("SELECT p from Person p")
+	@Query(value = "SELECT * from Person WHERE age < :age", nativeQuery = true)
 	List<Person> findPersonByAgeLessThanSQL(int age);
 
 	List<Person> findPersonByName(String name);
 
-	@Query("SELECT p from Person p WHERE p.name = ?1")
+	@Query(value = "SELECT p from Person p WHERE p.name = ?1")
 	List<Person> findPersonByNameJPQL(String name);
 
 	@Query(value = "SELECT * from Person WHERE name = ?1", nativeQuery = true)
@@ -45,7 +45,7 @@ public interface PersonRepo extends JpaRepository<Person, Long> {
 
 	Person findPersonByNameAndAge(String name, int age);
 
-	@Query("SELECT p from Person p WHERE p.name = ?1 and p.age = ?2")
+	@Query(value = "SELECT p from Person p WHERE p.name = ?1 and p.age = ?2")
 	Person findPersonByNameAndAgeJPQL(String name, int age);
 
 	@Query(value = "SELECT * from Person WHERE name = ?1 and age = ?2", nativeQuery = true)
@@ -53,18 +53,19 @@ public interface PersonRepo extends JpaRepository<Person, Long> {
 
 	List<Person> findPersonByNameIsNotNull();
 
-	@Query("SELECT p from Person p")
+	@Query(value = "SELECT p from Person p where p.name is not null")
 	List<Person> findPersonByNameIsNotNullJPQL();
 
-	@Query("SELECT p from Person p")
+	@Query(value = "SELECT * from Person WHERE name IS NOT NULL",  nativeQuery = true)
 	List<Person> findPersonByNameIsNotNullSQL();
 
 	List<Person> findPersonByNameIsNull();
 
-	@Query("SELECT p from Person p")
+	@Query(value = "SELECT p from Person p where p.name is null")
 	List<Person> findPersonByNameIsNullJPQL();
 
-	@Query("SELECT p from Person p")
+	@Query(value = "SELECT * from Person WHERE name IS NULL", nativeQuery = true)
 	List<Person> findPersonByNameIsNullSQL();
+
 
 }
